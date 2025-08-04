@@ -5,6 +5,7 @@
 Una piattaforma innovativa per la gestione, valorizzazione e tracciabilità dei prodotti agricoli locali, sviluppata seguendo il processo Unified Process (UP) e i principi GRASP.
 
 ## Indice
+
 •	 Panoramica
 •	 Caratteristiche Principali
 •	Attori del Sistema
@@ -12,8 +13,9 @@ Una piattaforma innovativa per la gestione, valorizzazione e tracciabilità dei 
 •	Tecnologie Utilizzate
 •	Struttura del Progetto
 •	Diagrammi UML
---------------------------------------------------------------------------------
+
 ## Panoramica
+
 La Piattaforma di Digitalizzazione e Valorizzazione della Filiera Agricola Locale è un sistema completo che permette la gestione, valorizzazione e tracciabilità dei prodotti agricoli di un territorio comunale.
 Obiettivi Principali
 •	Tracciabilità Completa: Visualizzazione dell'intero ciclo produttivo dei prodotti
@@ -21,8 +23,9 @@ Obiettivi Principali
 •	Marketplace Integrato: Vendita diretta da produttori a consumatori
 •	Gestione Eventi: Organizzazione di fiere e visite guidate
 •	 Sistema di Moderazione: Controllo qualità dei contenuti pubblicati
---------------------------------------------------------------------------------
+
 ## Caratteristiche Principali
+
 Utenti
 •	Catalogo Prodotti: Ricerca avanzata con filtri geografici e di categoria
 •	Tracciabilità: Visualizzazione completa della filiera produttiva
@@ -38,8 +41,9 @@ Sistema di Controllo
 •	Moderazione Contenuti: Workflow di approvazione per curatori
 •	Sistema di Notifiche: Comunicazioni multicanale
 •	Analytics: Dashboard per analisi dati e performance
---------------------------------------------------------------------------------
+
 ## Attori del Sistema
+
 Attore	Descrizione	Funzionalità Principali
 Produttore	Aziende agricole	Caricamento prodotti, certificazioni, vendita
 Trasformatore	Industrie di trasformazione	Gestione processi, tracciabilità, vendita
@@ -49,8 +53,9 @@ Animatore	Organizzatore eventi	Gestione fiere, visite guidate
 Acquirente	Consumatori finali	Ricerca, acquisto, partecipazione eventi
 Utente Generico	Visitatori	Consultazione informazioni
 Gestore	Amministratore	Gestione piattaforma, autorizzazioni
---------------------------------------------------------------------------------
+
 ## Architettura
+
 Pattern Architetturali
 •	Layered Architecture: Separazione in livelli logici
 •	Repository Pattern: Astrazione accesso dati
@@ -62,8 +67,9 @@ Principi GRASP Implementati
 •	Low Coupling: Basso accoppiamento tra componenti
 •	High Cohesion: Alta coesione funzionale
 •	Polymorphism: Gestione variazioni comportamentali
---------------------------------------------------------------------------------
+
 ## Tecnologie Utilizzate
+
 Backend
 •	Java: Linguaggio principale
 •	Spring Boot: Framework applicativo
@@ -74,16 +80,18 @@ DevOps & Tools
 •	Maven: Build automation
 •	Docker: Containerizzazione
 •	JUnit 5: Testing framework
---------------------------------------------------------------------------------
+
 ## Struttura del Progetto
+
 filiera-agricola-platform/
 ├── src/
 │   ├── main/
 │   │   ├── java/
 │   │   │   
 //TODO
---------------------------------------------------------------------------------
+
 ## Endpoints Principali
+
 Autenticazione
 POST /api/auth/login          # Login utente
 POST /api/auth/register       # Registrazione
@@ -104,8 +112,9 @@ GET    /api/events           # Lista eventi
 POST   /api/events           # Crea evento
 GET    /api/events/{id}      # Dettagli evento
 POST   /api/events/{id}/join # Partecipa evento
---------------------------------------------------------------------------------
+
 ## Diagrammi UML
+
 Diagrammi Disponibili
 •	Casi d'Uso: Interazioni attori-sistema
 •	Classi di Analisi: Modello concettuale BCE
