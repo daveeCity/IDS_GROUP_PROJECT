@@ -1,6 +1,6 @@
 package main.java.it.unicam.cs.filieraagricola.repository;
 
-import com.filieraagricola.model.Product;
+import main.java.it.unicam.cs.filieraagricola.model.Product;
 import java.util.*;
 
 public class ProductRepository {

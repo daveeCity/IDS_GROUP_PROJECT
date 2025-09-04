@@ -1,9 +1,9 @@
 package main.java.it.unicam.cs.filieraagricola;
 
-import com.filieraagricola.platform.model.Company;
-import com.filieraagricola.platform.model.Product;
-import com.filieraagricola.platform.repository.ProductRepository;
-import com.filieraagricola.platform.service.ProductService;
+import main.java.it.unicam.cs.filieraagricola.model.Company;
+import main.java.it.unicam.cs.filieraagricola.model.Product;
+import main.java.it.unicam.cs.filieraagricola.repository.ProductRepository;
+import main.java.it.unicam.cs.filieraagricola.service.ProductService;
 
 public class Main {
     public static void main(String[] args) {
