@@ -3,7 +3,7 @@ package main.java.it.unicam.cs.filieraagricola.model;
 public class Company {
     private Long id;
     private String name;
-    private String role; // Produttore, Trasformatore, Distributore
+    private String role; //Produttore, trasformatore, distributore
     private String location;
 
     public Company(Long id, String name, String role, String location) {
