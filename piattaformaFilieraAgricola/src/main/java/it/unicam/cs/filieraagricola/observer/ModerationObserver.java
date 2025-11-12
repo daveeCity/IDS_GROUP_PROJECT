@@ -1,9 +1,14 @@
-package main.java.it.unicam.cs.filieraagricola.observer;
+package it.unicam.cs.filieraagricola.observer;
 
-import main.java.it.unicam.cs.filieraagricola.model.Product;
+
+
+import it.unicam.cs.filieraagricola.model.Prodotto;
 
 public interface ModerationObserver {
-    void onProductApproved(Product product);
-    void onProductRejected(Product product, String reason);
-    void onProductSubmittedForReview(Product product);
+    /**
+     * Metodo chiamato dal Subject quando lo stato di un prodotto cambia.
+     * @param prodotto L'entità prodotto aggiornata
+     * @param action L'azione eseguita (es. "approvato", "rifiutato")
+     */
+    void update(Prodotto prodotto, String action);
 }

@@ -1,4 +1,4 @@
-package main.java.it.unicam.cs.filieraagricola.util;
+package it.unicam.cs.filieraagricola.util;
 public class IdGenerator {
     private static long counter = 1;
 
