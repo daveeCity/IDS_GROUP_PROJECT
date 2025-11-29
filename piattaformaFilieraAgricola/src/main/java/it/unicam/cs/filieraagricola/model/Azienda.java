@@ -3,14 +3,11 @@ package it.unicam.cs.filieraagricola.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 public abstract class Azienda extends Utente {
 
     @Column(name = "nome_azienda")
@@ -28,7 +25,6 @@ public abstract class Azienda extends Utente {
     @OneToMany(mappedBy = "azienda")
     private List<Prodotto> prodotti;
 
-    // Costruttori, Getter e Setter
 
     public Azienda() {
         super();
@@ -43,5 +39,43 @@ public abstract class Azienda extends Utente {
         this.descrizione = descrizione;
     }
 
-    // ... getter e setter ...
+    public String getNomeAzienda() {
+        return nomeAzienda;
+    }
+
+    public void setNomeAzienda(String nomeAzienda) {
+        this.nomeAzienda = nomeAzienda;
+    }
+
+    public String getPartitaIva() {
+        return partitaIva;
+    }
+
+    public void setPartitaIva(String partitaIva) {
+        this.partitaIva = partitaIva;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public List<Prodotto> getProdotti() {
+        return prodotti;
+    }
+
+    public void setProdotti(List<Prodotto> prodotti) {
+        this.prodotti = prodotti;
+    }
 }
