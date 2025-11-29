@@ -1,4 +1,4 @@
-package it.unicam.cs.filieraagricola.DTO;
+package it.unicam.cs.filieraagricola.mapper;
 
 import it.unicam.cs.filieraagricola.DTO.CarrelloDTO;
 import it.unicam.cs.filieraagricola.DTO.ElementoCarrelloDTO;
