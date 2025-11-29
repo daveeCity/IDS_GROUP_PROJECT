@@ -2,14 +2,11 @@ package it.unicam.cs.filieraagricola.model;
 
 
 import jakarta.persistence.*;
-
-
-import org.springframework.data.annotation.Id;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+
 @Table(name = "carrelli")
 public class Carrello {
 
@@ -46,5 +43,28 @@ public class Carrello {
         elemento.setCarrello(null);
     }
 
-    // ... getter e setter ...
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Acquirente getAcquirente() {
+        return acquirente;
+    }
+
+    public void setAcquirente(Acquirente acquirente) {
+        this.acquirente = acquirente;
+    }
+
+    public List<ElementoCarrello> getElementi() {
+        return elementi;
+    }
+
+    public void setElementi(List<ElementoCarrello> elementi) {
+        this.elementi = elementi;
+    }
+
 }
