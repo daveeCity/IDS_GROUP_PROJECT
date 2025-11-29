@@ -2,7 +2,6 @@ package it.unicam.cs.filieraagricola.model;
 
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "dettagli_ordine")
@@ -12,12 +11,12 @@ public class DettaglioOrdine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Relazione: Molti dettagli appartengono a un Ordine
+    // Relazione: molti dettagli appartengono a un Ordine
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ordine_id", nullable = false)
     private Ordine ordine;
 
-    // Relazione: Molti dettagli puntano a un Prodotto
+    // Relazione: molti dettagli puntano a un Prodotto
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prodotto_id", nullable = false)
     private Prodotto prodotto;
@@ -31,7 +30,6 @@ public class DettaglioOrdine {
     @Column(nullable = false)
     private double prezzoUnitario;
 
-    // Costruttori, Getter e Setter
 
     public DettaglioOrdine() {}
 
@@ -42,5 +40,43 @@ public class DettaglioOrdine {
         this.prezzoUnitario = prodotto.getPrezzo(); // Fissa il prezzo
     }
 
-    // ... getter e setter ...
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Ordine getOrdine() {
+        return ordine;
+    }
+
+    public void setOrdine(Ordine ordine) {
+        this.ordine = ordine;
+    }
+
+    public Prodotto getProdotto() {
+        return prodotto;
+    }
+
+    public void setProdotto(Prodotto prodotto) {
+        this.prodotto = prodotto;
+    }
+
+    public int getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
+    }
+
+    public double getPrezzoUnitario() {
+        return prezzoUnitario;
+    }
+
+    public void setPrezzoUnitario(double prezzoUnitario) {
+        this.prezzoUnitario = prezzoUnitario;
+    }
 }

@@ -23,5 +23,11 @@ public class Animatore extends Utente {
         super(username, email, password);
     }
 
-    // ... getter e setter ...
+    public List<Evento> getEventiCreati() {
+        return eventiCreati;
+    }
+
+    public void setEventiCreati(List<Evento> eventiCreati) {
+        this.eventiCreati = eventiCreati;
+    }
 }

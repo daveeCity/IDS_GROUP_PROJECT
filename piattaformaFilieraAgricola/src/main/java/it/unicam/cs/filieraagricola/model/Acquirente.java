@@ -24,5 +24,11 @@ public class Acquirente extends Utente {
         super(username, email, password);
     }
 
-    // ... getter e setter ...
+    public List<Ordine> getOrdini() {
+        return ordini;
+    }
+
+    public void setOrdini(List<Ordine> ordini) {
+        this.ordini = ordini;
+    }
 }
