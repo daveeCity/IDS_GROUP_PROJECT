@@ -10,11 +10,11 @@ import java.util.Optional;
 @Repository
 public interface AziendaRepository extends JpaRepository<Azienda, Long> {
     
-    List<Azienda> findByRole(String role);
-    
-    List<Azienda> findByLocation(String location);
-    
-    Optional<Azienda> findByNameIgnoreCase(String name);
-    
-    List<Azienda> findByNameContainingIgnoreCase(String name);
+    //List<Azienda> findByRole(String role);
+
+    List<Azienda> findByIndirizzo(String indirizzo);
+
+    Optional<Azienda> findByNomeAzienda(String nomeAzienda);
+
+    List<Azienda> findByNomeAziendaContainingIgnoreCase(String nomeAzienda);
 }
