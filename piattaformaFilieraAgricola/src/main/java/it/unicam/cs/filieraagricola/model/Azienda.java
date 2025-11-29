@@ -3,10 +3,14 @@ package it.unicam.cs.filieraagricola.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public abstract class Azienda extends Utente {
 
     @Column(name = "nome_azienda")
