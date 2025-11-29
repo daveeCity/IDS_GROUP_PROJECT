@@ -6,6 +6,7 @@ import it.unicam.cs.filieraagricola.factory.UtenteFactory;
 import it.unicam.cs.filieraagricola.model.Utente;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,10 +27,8 @@ public class AutenticazioneServiceImpl implements AutenticazioneService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    @Lazy
     private AuthenticationManager authenticationManager;
-
-    // @Autowired
-    // private JwtTokenProvider tokenProvider; // Assumendo che tu abbia questa classe
 
     @Override
     public AuthResponseDTO registraUtente(RegisterRequestDTO request) {
@@ -75,7 +74,7 @@ public class AutenticazioneServiceImpl implements AutenticazioneService {
 
         // 4. Ottieni i dettagli dell'utente per la risposta
         Utente utente = utenteRepository.findByUsername(request.getUsername()).get();
-        String ruolo = utente.getClass().getAnnotation(javax.persistence.DiscriminatorValue.class).value();
+        String ruolo = utente.getClass().getAnnotation(jakarta.persistence.DiscriminatorValue.class).value();
 
         return new AuthResponseDTO(jwt, utente.getUsername(), ruolo);
     }
