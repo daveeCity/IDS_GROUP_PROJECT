@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class CheckoutRequestDTO {
-    // Es. "CARTA_DI_CREDITO", "PAYPAL"
     private String tipoPagamento;
 }

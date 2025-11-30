@@ -1,14 +1,11 @@
 package it.unicam.cs.filieraagricola.model;
 
-
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("CURATORE")
 public class Curatore extends Utente {
-
-    // Campi specifici (es. per la moderazione)
 
     public Curatore() {
         super();

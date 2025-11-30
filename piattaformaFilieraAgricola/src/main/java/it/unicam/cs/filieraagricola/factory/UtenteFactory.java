@@ -1,7 +1,5 @@
 package it.unicam.cs.filieraagricola.factory;
 
-// package it.unicam.cs.filieraagricola.factory;
-
 import it.unicam.cs.filieraagricola.DTO.RegisterRequestDTO;
 import it.unicam.cs.filieraagricola.model.*;
 import org.springframework.stereotype.Component;

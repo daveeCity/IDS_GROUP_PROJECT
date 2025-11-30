@@ -3,10 +3,15 @@ import lombok.Data;
 
 @Data
 public class ProdottoRequestDTO {
-    // L'ID non serve, è una creazione
     private String nome;
     private String descrizione;
     private double prezzo;
     private int quantitaDisponibile;
-    // L'aziendaId verrà passato dal Controller in base all'utente autenticato
+
+    public ProdottoRequestDTO(String nome, String descrizione, double prezzo, int quantitaDisponibile) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.prezzo = prezzo;
+        this.quantitaDisponibile = quantitaDisponibile;
+    }
 }

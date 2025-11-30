@@ -10,6 +10,4 @@ public class PassoFilieraRequestDTO {
     private String descrizione;
     private LocalDateTime dataOra;
     private String luogo;
-    // L'aziendaId sarà preso dall'utente autenticato
-    // Il tracciabilitaId sarà preso dal path dell'API
 }

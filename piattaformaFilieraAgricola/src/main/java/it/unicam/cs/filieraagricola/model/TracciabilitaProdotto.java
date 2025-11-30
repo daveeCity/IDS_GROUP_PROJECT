@@ -23,6 +23,27 @@ public class TracciabilitaProdotto {
     @OneToMany(mappedBy = "tracciabilita", cascade = CascadeType.ALL)
     private List<PassoFiliera> passi;
 
-    // Costruttori, Getter e Setter
-    // ...
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<PassoFiliera> getPassi() {
+        return passi;
+    }
+
+    public void setPassi(List<PassoFiliera> passi) {
+        this.passi = passi;
+    }
+
+    public Prodotto getProdotto() {
+        return prodotto;
+    }
+
+    public void setProdotto(Prodotto prodotto) {
+        this.prodotto = prodotto;
+    }
 }

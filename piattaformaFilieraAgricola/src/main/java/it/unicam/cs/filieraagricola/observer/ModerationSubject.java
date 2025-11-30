@@ -1,7 +1,5 @@
 package it.unicam.cs.filieraagricola.observer;
 
-
-
 import it.unicam.cs.filieraagricola.model.Prodotto; //
 
 public interface ModerationSubject {

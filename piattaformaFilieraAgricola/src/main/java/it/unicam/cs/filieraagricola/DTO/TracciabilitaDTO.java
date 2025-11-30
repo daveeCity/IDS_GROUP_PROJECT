@@ -9,5 +9,5 @@ public class TracciabilitaDTO {
     private Long id;
     private Long prodottoId;
     private String nomeProdotto;
-    private List<PassoFilieraDTO> passiDellaFiliera; // Lista ordinata dei passi
+    private List<PassoFilieraDTO> passiDellaFiliera;
 }

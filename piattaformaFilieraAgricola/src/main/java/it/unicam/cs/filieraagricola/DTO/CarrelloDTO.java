@@ -1,6 +1,5 @@
 package it.unicam.cs.filieraagricola.DTO;
 
-
 import lombok.Data;
 import lombok.Getter;
 

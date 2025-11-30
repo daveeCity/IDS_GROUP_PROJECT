@@ -9,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface AziendaRepository extends JpaRepository<Azienda, Long> {
-    
-    //List<Azienda> findByRole(String role);
 
     List<Azienda> findByIndirizzo(String indirizzo);
 

@@ -3,6 +3,7 @@ package it.unicam.cs.filieraagricola.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "prodotti")
 public class Prodotto {
@@ -42,5 +43,59 @@ public class Prodotto {
         this.stato = StatoProdotto.IN_ATTESA; // Stato di default alla creazione
     }
 
-    // ... getter e setter ...
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public StatoProdotto getStato() {
+        return stato;
+    }
+
+    public void setStato(StatoProdotto stato) {
+        this.stato = stato;
+    }
+
+    public Azienda getAzienda() {
+        return azienda;
+    }
+
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
+    }
+
+    public int getQuantitaDisponibile() {
+        return quantitaDisponibile;
+    }
+
+    public void setQuantitaDisponibile(int quantitaDisponibile) {
+        this.quantitaDisponibile = quantitaDisponibile;
+    }
+
+    public double getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

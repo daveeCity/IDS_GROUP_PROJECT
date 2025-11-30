@@ -25,10 +25,12 @@ public class Acquirente extends Utente {
     }
 
     public List<Ordine> getOrdini() {
+
         return ordini;
     }
 
     public void setOrdini(List<Ordine> ordini) {
+
         this.ordini = ordini;
     }
 }

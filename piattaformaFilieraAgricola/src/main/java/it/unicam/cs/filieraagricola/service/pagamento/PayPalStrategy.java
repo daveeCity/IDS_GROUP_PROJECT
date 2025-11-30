@@ -5,16 +5,16 @@ import it.unicam.cs.filieraagricola.model.TipoPagamento;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CartaCreditoStrategy implements PagamentoStrategy {
+public class PayPalStrategy implements PagamentoStrategy {
     @Override
     public String processaPagamento(Pagamento pagamento) {
-        System.out.println("Processo pagamento di " + pagamento.getImporto() + "€ con Carta di Credito.");
+        // Logica fittizia di connessione a PayPal
+        System.out.println("Processo pagamento di " + pagamento.getImporto() + "€ con PayPal.");
         return "APPROVATO";
     }
 
     @Override
     public TipoPagamento getTipoPagamento() {
-        return TipoPagamento.CARTA_DI_CREDITO;
+        return TipoPagamento.PAYPAL;
     }
 }
-

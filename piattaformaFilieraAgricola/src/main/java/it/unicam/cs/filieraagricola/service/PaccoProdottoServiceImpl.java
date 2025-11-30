@@ -2,6 +2,7 @@ package it.unicam.cs.filieraagricola.service;
 
 import it.unicam.cs.filieraagricola.DTO.PaccoProdottoDTO;
 import it.unicam.cs.filieraagricola.DTO.PaccoProdottoRequestDTO;
+import it.unicam.cs.filieraagricola.mapper.ProdottoMapper;
 import it.unicam.cs.filieraagricola.model.Distributore;
 import it.unicam.cs.filieraagricola.model.PaccoProdotto;
 import it.unicam.cs.filieraagricola.model.Prodotto;
@@ -9,18 +10,22 @@ import it.unicam.cs.filieraagricola.repository.PaccoProdottoRepository;
 import it.unicam.cs.filieraagricola.repository.ProdottoRepository;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Getter
+@Setter
 public class PaccoProdottoServiceImpl implements PaccoProdottoService {
 
     @Autowired private PaccoProdottoRepository paccoProdottoRepository;
     @Autowired private ProdottoRepository prodottoRepository;
     @Autowired private UtenteRepository utenteRepository;
-    @Autowired private ProdottoMapper prodottoMapper; // Mapper da Prodotto a ProdottoDTO
+    @Autowired private ProdottoMapper prodottoMapper;
 
     @Override
     public List<PaccoProdottoDTO> getPacchettiByDistributore(Long distributoreId) {

@@ -8,5 +8,5 @@ public class PaccoProdottoRequestDTO {
     private String nome;
     private String descrizione;
     private double prezzo;
-    private List<Long> prodottoIds; // Lista degli ID dei prodotti da includere
+    private List<Long> prodottoIds;
 }

@@ -10,12 +10,16 @@ import it.unicam.cs.filieraagricola.model.StatoProdotto;
 import it.unicam.cs.filieraagricola.repository.ProdottoRepository;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository; // Usiamo questo per trovare l'azienda
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Getter
+@Setter
 public class ProdottoServiceImpl implements ProdottoService {
 
     @Autowired
@@ -106,7 +110,6 @@ public class ProdottoServiceImpl implements ProdottoService {
         return prodottoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Prodotto non trovato con ID: " + id));
     }
-
     // Mapper manuale da Entità a DTO
     private ProdottoDTO convertToDTO(Prodotto prodotto) {
         ProdottoDTO dto = new ProdottoDTO();

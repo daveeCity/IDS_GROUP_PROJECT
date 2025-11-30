@@ -38,6 +38,59 @@ public class PaccoProdotto {
     )
     private List<Prodotto> prodotti; // <-- Usa la nostra nuova entità
 
-    // Costruttori, Getter e Setter
-    // ...
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Prodotto> getProdotti() {
+        return prodotti;
+    }
+
+    public void setProdotti(List<Prodotto> prodotti) {
+        this.prodotti = prodotti;
+    }
+
+    public Distributore getDistributore() {
+        return distributore;
+    }
+
+    public void setDistributore(Distributore distributore) {
+        this.distributore = distributore;
+    }
+
+    public TipoPacco getTipoPacco() {
+        return tipoPacco;
+    }
+
+    public void setTipoPacco(TipoPacco tipoPacco) {
+        this.tipoPacco = tipoPacco;
+    }
+
+    public double getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

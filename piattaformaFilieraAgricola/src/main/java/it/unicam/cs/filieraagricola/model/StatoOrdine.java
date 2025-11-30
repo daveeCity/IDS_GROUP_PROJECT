@@ -2,8 +2,8 @@ package it.unicam.cs.filieraagricola.model;
 
 
 public enum StatoOrdine {
-    PENDENTE,   // Ordine creato, in attesa di pagamento
-    CONFERMATO, // Pagamento ricevuto
+    IN_ATTESA,
+    CONFERMATO,
     SPEDITO,
     CONSEGNATO,
     ANNULLATO

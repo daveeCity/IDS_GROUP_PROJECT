@@ -24,10 +24,12 @@ public class Animatore extends Utente {
     }
 
     public List<Evento> getEventiCreati() {
+
         return eventiCreati;
     }
 
     public void setEventiCreati(List<Evento> eventiCreati) {
+
         this.eventiCreati = eventiCreati;
     }
 }

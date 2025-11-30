@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ElementoCarrelloDTO {
+    private Long id;
     private Long prodottoId;
     private String nomeProdotto;
     private int quantita;

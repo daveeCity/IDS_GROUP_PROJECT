@@ -1,9 +1,13 @@
 package it.unicam.cs.filieraagricola.service;
 import it.unicam.cs.filieraagricola.DTO.*;
+import it.unicam.cs.filieraagricola.mapper.CarrelloMapper;
+import it.unicam.cs.filieraagricola.mapper.OrdineMapper;
 import it.unicam.cs.filieraagricola.model.*;
 import it.unicam.cs.filieraagricola.repository.*;
 import it.unicam.cs.filieraagricola.service.pagamento.PagamentoService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Getter
+@Setter
 public class MarketplaceServiceImpl implements MarketplaceService {
 
     @Autowired private CarrelloRepository carrelloRepository;
@@ -22,14 +28,15 @@ public class MarketplaceServiceImpl implements MarketplaceService {
     @Autowired private OrdineRepository ordineRepository;
     @Autowired private PagamentoRepository pagamentoRepository;
     @Autowired private PagamentoService pagamentoService;
-    @Autowired private MarketplaceMapper marketplaceMapper; // Mapper DTO
+    @Autowired private CarrelloMapper carrelloMapper;
+    @Autowired private OrdineMapper ordineMapper;
 
     @Override
     @Transactional(readOnly = true)
     public CarrelloDTO getCarrello() {
         Acquirente acquirente = getAcquirenteAutenticato();
         Carrello carrello = getOrCreateCarrello(acquirente);
-        return marketplaceMapper.toCarrelloDTO(carrello);
+        return carrelloMapper.toDTO(carrello);
     }
 
     @Override
@@ -59,7 +66,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
             carrello.getElementi().add(elemento);
         }
 
-        return marketplaceMapper.toCarrelloDTO(carrello);
+        return carrelloMapper.toDTO(carrello);
     }
 
     @Override
@@ -75,7 +82,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         elementoCarrelloRepository.delete(elemento);
         carrello.getElementi().remove(elemento);
 
-        return marketplaceMapper.toCarrelloDTO(carrello);
+        return carrelloMapper.toDTO(carrello);
     }
 
 
@@ -92,11 +99,10 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         // 1. Crea l'Ordine
         Ordine ordine = new Ordine();
         ordine.setAcquirente(acquirente);
-        ordine.setStato(StatoOrdine.PENDENTE);
+        ordine.setStato(StatoOrdine.IN_ATTESA);
 
         double totaleOrdine = 0.0;
         List<DettaglioOrdine> dettagli = new ArrayList<>();
-
         // 2. Convalida lo stock e crea i dettagli ordine
         for (ElementoCarrello elemento : carrello.getElementi()) {
             Prodotto prodotto = elemento.getProdotto();
@@ -138,7 +144,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
             throw new RuntimeException("Pagamento fallito: " + esito);
         }
 
-        return marketplaceMapper.toOrdineDTO(ordineSalvato);
+        return ordineMapper.toDTO(ordineSalvato);
     }
 
     @Override
@@ -147,7 +153,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         Acquirente acquirente = getAcquirenteAutenticato();
         return ordineRepository.findByAcquirenteId(acquirente.getId())
                 .stream()
-                .map(marketplaceMapper::toOrdineDTO)
+                .map(ordineMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -161,7 +167,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         if (!ordine.getAcquirente().getId().equals(acquirente.getId())) {
             throw new RuntimeException("Accesso non autorizzato all'ordine.");
         }
-        return marketplaceMapper.toOrdineDTO(ordine);
+        return ordineMapper.toDTO(ordine);
     }
 
 

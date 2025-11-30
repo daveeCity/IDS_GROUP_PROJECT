@@ -1,7 +1,6 @@
- package it.unicam.cs.filieraagricola.model;
+package it.unicam.cs.filieraagricola.model;
 
 import jakarta.persistence.*;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,8 +36,54 @@ public class Ordine {
 
     public Ordine() {
         this.dataOrdine = LocalDateTime.now();
-        this.stato = StatoOrdine.PENDENTE;
+        this.stato = StatoOrdine.IN_ATTESA;
     }
 
-    // ... getter e setter ...
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<DettaglioOrdine> getDettagliOrdine() {
+        return dettagliOrdine;
+    }
+
+    public void setDettagliOrdine(List<DettaglioOrdine> dettagliOrdine) {
+        this.dettagliOrdine = dettagliOrdine;
+    }
+
+    public Acquirente getAcquirente() {
+        return acquirente;
+    }
+
+    public void setAcquirente(Acquirente acquirente) {
+        this.acquirente = acquirente;
+    }
+
+    public StatoOrdine getStato() {
+        return stato;
+    }
+
+    public void setStato(StatoOrdine stato) {
+        this.stato = stato;
+    }
+
+    public double getTotale() {
+        return totale;
+    }
+
+    public void setTotale(double totale) {
+        this.totale = totale;
+    }
+
+    public LocalDateTime getDataOrdine() {
+        return dataOrdine;
+    }
+
+    public void setDataOrdine(LocalDateTime dataOrdine) {
+        this.dataOrdine = dataOrdine;
+    }
 }

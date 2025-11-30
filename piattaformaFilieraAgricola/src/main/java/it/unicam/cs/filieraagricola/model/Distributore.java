@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("DISTRIBUTORE")
 public class Distributore extends Azienda {
 
-    // Campi specifici (es. gestione pacchetti prodotti)
-
     public Distributore() {
         super();
     }

@@ -11,5 +11,5 @@ public class PaccoProdottoDTO {
     private double prezzo;
     private Long distributoreId;
     private String nomeDistributore;
-    private List<ProdottoDTO> prodottiInclusi; // Mostra i dettagli dei prodotti
+    private List<ProdottoDTO> prodottiInclusi;
 }

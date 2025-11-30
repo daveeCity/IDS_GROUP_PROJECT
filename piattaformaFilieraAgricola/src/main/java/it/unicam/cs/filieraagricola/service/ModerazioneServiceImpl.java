@@ -2,12 +2,15 @@ package it.unicam.cs.filieraagricola.service;
 
 import it.unicam.cs.filieraagricola.DTO.ModerazioneRequestDTO;
 import it.unicam.cs.filieraagricola.DTO.ProdottoDTO;
+import it.unicam.cs.filieraagricola.mapper.ProdottoMapper;
 import it.unicam.cs.filieraagricola.model.Prodotto;
-import it.unicam.cs.filieraagricola.model.StatoProdotto; // <-- AGGIORNATO
-import it.unicam.cs.filieraagricola.observer.ModerationObserver; // <-- MANTENUTO
-import it.unicam.cs.filieraagricola.observer.ModerationSubject; // <-- MANTENUTO
-import it.unicam.cs.filieraagricola.repository.ProdottoRepository; // <-- AGGIORNATO
+import it.unicam.cs.filieraagricola.model.StatoProdotto;
+import it.unicam.cs.filieraagricola.observer.ModerationObserver;
+import it.unicam.cs.filieraagricola.observer.ModerationSubject;
+import it.unicam.cs.filieraagricola.repository.ProdottoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -15,10 +18,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Getter
+@Setter
 public class ModerazioneServiceImpl implements ModerazioneService, ModerationSubject {
 
     @Autowired
-    private ProdottoRepository prodottoRepository; // <-- AGGIORNATO
+    private ProdottoRepository prodottoRepository;
 
     // Mapper DTO (potremmo spostarlo in una classe 'Mapper' dedicata)
     @Autowired

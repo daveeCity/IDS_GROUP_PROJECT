@@ -44,26 +44,32 @@ public class Carrello {
     }
 
     public Long getId() {
+
         return id;
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public Acquirente getAcquirente() {
+
         return acquirente;
     }
 
     public void setAcquirente(Acquirente acquirente) {
+
         this.acquirente = acquirente;
     }
 
     public List<ElementoCarrello> getElementi() {
+
         return elementi;
     }
 
     public void setElementi(List<ElementoCarrello> elementi) {
+
         this.elementi = elementi;
     }
 

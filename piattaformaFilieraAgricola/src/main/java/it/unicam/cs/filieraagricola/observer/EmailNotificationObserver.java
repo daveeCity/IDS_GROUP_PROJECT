@@ -1,7 +1,5 @@
 package it.unicam.cs.filieraagricola.observer;
 
-
-
 import it.unicam.cs.filieraagricola.model.Azienda;
 import it.unicam.cs.filieraagricola.model.Prodotto;
 import org.springframework.stereotype.Component;

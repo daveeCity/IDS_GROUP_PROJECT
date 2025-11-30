@@ -1,9 +1,8 @@
 package it.unicam.cs.filieraagricola.service;
 
-
 import it.unicam.cs.filieraagricola.DTO.EventoDTO;
 import it.unicam.cs.filieraagricola.DTO.EventoRequestDTO;
-import it.unicam.cs.filieraagricola.model.*; // Importa Evento, Animatore, Acquirente, etc.
+import it.unicam.cs.filieraagricola.model.*;
 import it.unicam.cs.filieraagricola.repository.EventoRepository;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +21,7 @@ public class EventoServiceImpl implements EventoService {
     public List<EventoDTO> getEventiPubblici() {
         // Mostra solo eventi PIANIFICATI o COMPLETATI
         return eventoRepository.findAll().stream()
-                .filter(e -> e.getStato() != StatoEvento.ANNULLATO)
+                .filter(e -> e.getStato() != StatoEvento.CANCELLED)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -53,7 +52,7 @@ public class EventoServiceImpl implements EventoService {
         evento.setDataOraFine(request.getDataOraFine());
         evento.setLuogo(request.getLuogo());
         evento.setTipo(TipoEvento.valueOf(request.getTipo().toUpperCase()));
-        evento.setStato(StatoEvento.PIANIFICATO); // Default
+        evento.setStato(StatoEvento.PLANNED); // Default
         evento.setAnimatore(animatore);
 
         Evento salvato = eventoRepository.save(evento);
@@ -79,7 +78,7 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void annullaEvento(Long eventoId) {
         Evento evento = findEventoById(eventoId);
-        evento.setStato(StatoEvento.ANNULLATO);
+        evento.setStato(StatoEvento.CANCELLED);
         eventoRepository.save(evento);
     }
 
@@ -98,8 +97,6 @@ public class EventoServiceImpl implements EventoService {
 
         System.out.println("L'acquirente " + acquirente.getUsername() + " si è registrato all'evento " + evento.getTitolo());
     }
-
-    // --- Metodi Privati di Utilità ---
 
     private Evento findEventoById(Long id) {
         return eventoRepository.findById(id)

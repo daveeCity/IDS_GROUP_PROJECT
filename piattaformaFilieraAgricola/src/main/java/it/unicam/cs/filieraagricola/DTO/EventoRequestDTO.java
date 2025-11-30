@@ -11,5 +11,5 @@ public class EventoRequestDTO {
     private LocalDateTime dataOraInizio;
     private LocalDateTime dataOraFine;
     private String luogo;
-    private String tipo; // Es. FIERA, VISITA_ GUIDATA
+    private String tipo;
 }
