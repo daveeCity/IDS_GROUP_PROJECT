@@ -2,10 +2,16 @@ package it.unicam.cs.filieraagricola.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher; // <-- 1. AGGIUNGI QUESTO IMPORT
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -14,19 +20,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable()) // Disabilita CSRF per facilitare i test con Postman
                 .authorizeHttpRequests(authz -> authz
-                        // --- 2. USA LA NUOVA SINTASSI ---
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll() // Sostituisce .anyRequest()
+                        // Endpoint pubblici (Registrazione, Login, H2 Console)
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/")).permitAll()
+
+                        // TUTTO il resto richiede autenticazione
+                        .anyRequest().authenticated()
                 )
-                // 3. Sintassi aggiornata anche per frameOptions (per H2-Console)
-                .headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
+                // Abilita HTTP Basic Authentication (Username + Password)
+                .httpBasic(withDefaults())
+
+                // Opzionale: Permette l'accesso alla console H2 (che usa i frame)
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();
     }
 
-    // NOTA: Per un'applicazione reale, dovrai aggiungere qui i Bean per
-    // PasswordEncoder, AuthenticationManager, ecc.
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }
