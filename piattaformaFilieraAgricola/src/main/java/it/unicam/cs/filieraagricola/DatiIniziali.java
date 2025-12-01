@@ -80,7 +80,7 @@ public class DatiIniziali implements CommandLineRunner {
             PaccoProdottoRequestDTO paccoDto = new PaccoProdottoRequestDTO();
             paccoDto.setNome("Cesto Aperitivo");
             paccoDto.setDescrizione("Vino e Formaggio");
-            paccoDto.setPrezzo(30.00); // Un po' scontato
+            paccoDto.setPrezzo(30.00);
             paccoDto.setProdottoIds(List.of(vino.getId(), formaggio.getId()));
 
             paccoProdottoService.creaPacco(paccoDto, distributore.getId());

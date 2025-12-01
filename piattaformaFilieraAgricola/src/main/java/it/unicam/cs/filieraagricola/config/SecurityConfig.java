@@ -1,7 +1,9 @@
 package it.unicam.cs.filieraagricola.config;
 
+import it.unicam.cs.filieraagricola.model.Trasformatore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod; // Importante per distinguere GET da POST
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,26 +22,45 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disabilita CSRF per facilitare i test con Postman
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        // Endpoint pubblici (Registrazione, Login, H2 Console)
+                        // --- 1. Regole Pubbliche ---
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-
-                        // --- SWAGGER / OPENAPI WHITELIST ---
-                        // Permette l'accesso alla documentazione API senza login
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui.html")).permitAll()
-                        // ------------------------------------
 
-                        // TUTTO il resto richiede autenticazione
+                        // --- 2. REGOLE EVENTI (Ordine Fondamentale!) ---
+
+                        // A. L'eccezione: Solo l'ACQUIRENTE può fare POST su "partecipa"
+                        // Nota: i doppi asterischi ** servono per coprire l'ID variabile
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/eventi/*/partecipa")).hasRole("ACQUIRENTE")
+
+                        // B. Lettura Eventi: Aperta a tutti gli utenti loggati (o permitAll() se vuoi pubblico)
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/eventi/**")).authenticated()
+
+                        // C. Regola Generale: Tutto il resto su /api/eventi (Creare, Annullare) è solo per ANIMATORE
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/eventi/**")).hasRole("ANIMATORE")
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/marketplace/**")).hasRole("ACQUIRENTE")
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/moderazione/**")).hasRole("CURATORE")
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/pacchi/**")).hasRole("DISTRIBUTORE")
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/prodotti/**")).hasAnyRole("TRASFORMATORE","PRODUTTORE","DISTRIBUTORE")
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/mappa/**")).permitAll()
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/tracciabilita/**")).hasAnyRole("PRODUTTORE", "TRASFORMATORE")
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/tracciabilita/**")).authenticated()
+
+                        // --- 3. Default ---
                         .anyRequest().authenticated()
                 )
-                // Abilita HTTP Basic Authentication (Username + Password)
                 .httpBasic(withDefaults())
-
-                // Opzionale: Permette l'accesso alla console H2 (che usa i frame)
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();

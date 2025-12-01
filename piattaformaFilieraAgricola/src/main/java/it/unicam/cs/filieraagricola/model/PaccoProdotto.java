@@ -22,12 +22,12 @@ public class PaccoProdotto {
     private double prezzo;
 
     @Enumerated(EnumType.STRING)
-    private TipoPacco tipoPacco; // <-- Refactored
+    private TipoPacco tipoPacco;
 
     // Relazione: Creato da un Distributore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "distributore_id", nullable = false)
-    private Distributore distributore; // <-- Usa la nostra nuova entità
+    private Distributore distributore;
 
     // Relazione: Contiene molti Prodotti
     @ManyToMany
@@ -36,7 +36,7 @@ public class PaccoProdotto {
             joinColumns = @JoinColumn(name = "pacco_id"),
             inverseJoinColumns = @JoinColumn(name = "prodotto_id")
     )
-    private List<Prodotto> prodotti; // <-- Usa la nostra nuova entità
+    private List<Prodotto> prodotti;
 
     public Long getId() {
         return id;

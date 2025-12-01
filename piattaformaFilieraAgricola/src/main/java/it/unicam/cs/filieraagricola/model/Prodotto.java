@@ -2,7 +2,7 @@ package it.unicam.cs.filieraagricola.model;
 
 
 import jakarta.persistence.*;
-
+import java.util.List;
 
 @Entity
 @Table(name = "prodotti")
@@ -28,8 +28,13 @@ public class Prodotto {
 
     // Stato del prodotto per la moderazione
     @Enumerated(EnumType.STRING)
-    private StatoProdotto stato; // <-- Utilizza l'enum allineato
+    private StatoProdotto stato;
 
+    @OneToOne(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private TracciabilitaProdotto tracciabilita;
+
+    @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElementoCarrello> inCarrelli;
     // Costruttori, Getter e Setter
 
     public Prodotto() {}
@@ -40,7 +45,7 @@ public class Prodotto {
         this.prezzo = prezzo;
         this.quantitaDisponibile = quantitaDisponibile;
         this.azienda = azienda;
-        this.stato = StatoProdotto.IN_ATTESA; // Stato di default alla creazione
+        this.stato = StatoProdotto.IN_ATTESA;
     }
 
     public Long getId() {
