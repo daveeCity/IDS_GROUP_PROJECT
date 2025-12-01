@@ -12,4 +12,6 @@ public class EventoRequestDTO {
     private LocalDateTime dataOraFine;
     private String luogo;
     private String tipo;
+    private Double latitudine;
+    private Double longitudine;
 }

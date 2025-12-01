@@ -47,12 +47,12 @@ public class DatiIniziali implements CommandLineRunner {
         try {
             System.out.println("... Creazione Utenti ...");
             // 1. UTENTI
-            autenticazioneService.registraUtente(createDto("fattoriaRossi", "PRODUTTORE", "Fattoria Rossi", "11111111111"));
-            autenticazioneService.registraUtente(createDto("caseificioVerdi", "TRASFORMATORE", "Caseificio Verdi", "22222222222"));
-            autenticazioneService.registraUtente(createDto("tipicoMarche", "DISTRIBUTORE", "Tipico Marche", "33333333333"));
-            autenticazioneService.registraUtente(createDto("annaNeri", "ACQUIRENTE", null, null));
-            autenticazioneService.registraUtente(createDto("curatoreDemo", "CURATORE", null, null));
-            autenticazioneService.registraUtente(createDto("animatoreDemo", "ANIMATORE", null, null));
+            autenticazioneService.registraUtente(createDto("fattoriaRossi", "PRODUTTORE", "Fattoria Rossi", "11111111111", "Via Rossi 123", 100.0, 200.0));
+            autenticazioneService.registraUtente(createDto("caseificioVerdi", "TRASFORMATORE", "Caseificio Verdi", "22222222222", "Via Verdi 456", 300.0, 400.0));
+            autenticazioneService.registraUtente(createDto("tipicoMarche", "DISTRIBUTORE", "Tipico Marche", "33333333333", "Via Marche 789", 500.0, 600.0));
+            autenticazioneService.registraUtente(createDto("annaNeri", "ACQUIRENTE", null, null, null, null, null));
+            autenticazioneService.registraUtente(createDto("curatoreDemo", "CURATORE", null, null, null, null, null));
+            autenticazioneService.registraUtente(createDto("animatoreDemo", "ANIMATORE", null, null, null, null, null));
 
             // Recupero ID utili
             Azienda fattoria = (Azienda) utenteRepository.findByUsername("fattoriaRossi").get();
@@ -94,13 +94,16 @@ public class DatiIniziali implements CommandLineRunner {
             eventoDto.setTipo("FESTIVAL_GASTRONOMICO");
             eventoDto.setDataOraInizio(LocalDateTime.now().plusDays(5));
             eventoDto.setDataOraFine(LocalDateTime.now().plusDays(5).plusHours(4));
-            EventoDTO eventooo ;
+            eventoDto.setLongitudine(100.0);
+            eventoDto.setLatitudine(100.0);
+            EventoDTO eventooo;
             eventooo = eventoService.creaEvento(eventoDto, animatore.getId());
             System.out.println("   -> Creato evento '" + eventooo.getId());
             System.out.println("... Creazione Tracciabilità ...");
+
             // 5. TRACCIABILITÀ (Per testare TracciabilitaController)
             PassoFilieraRequestDTO passo1 = new PassoFilieraRequestDTO();
-            passo1.setNomeFase("SEEDING"); // Assicurati corrisponda al tuo Enum o String
+            passo1.setNomeFase("SEEDING");
             passo1.setDescrizione("Semina del campo sud");
             passo1.setLuogo("Fattoria Rossi - Campo A");
             passo1.setDataOra(LocalDateTime.now().minusMonths(3));
@@ -117,7 +120,7 @@ public class DatiIniziali implements CommandLineRunner {
         }
     }
 
-    private RegisterRequestDTO createDto(String username, String ruolo, String nomeAzienda, String pIva) {
+    private RegisterRequestDTO createDto(String username, String ruolo, String nomeAzienda, String pIva, String indirizzo, Double latitudine, Double longitudine) {
         RegisterRequestDTO dto = new RegisterRequestDTO();
         dto.setUsername(username);
         dto.setEmail(username + "@demo.com");
@@ -128,6 +131,8 @@ public class DatiIniziali implements CommandLineRunner {
             dto.setPartitaIva(pIva);
             dto.setIndirizzo("Via Demo 123");
             dto.setDescrizione("Descrizione demo");
+            dto.setLatitudine(latitudine);
+            dto.setLongitudine(longitudine);
         }
         return dto;
     }

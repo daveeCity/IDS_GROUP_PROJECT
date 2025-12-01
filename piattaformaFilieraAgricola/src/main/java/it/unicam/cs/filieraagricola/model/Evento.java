@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,12 +14,13 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titolo;
     private String descrizione;
     private LocalDateTime dataOraInizio;
     private LocalDateTime dataOraFine;
     private String luogo;
+    private double latitudine;
+    private double longitudine;
 
     @Enumerated(EnumType.STRING)
     private TipoEvento tipo; // <-- Refactored
@@ -39,6 +41,14 @@ public class Evento {
             inverseJoinColumns = @JoinColumn(name = "acquirente_id")
     )
     private Set<Acquirente> partecipanti;
+
+    @ManyToMany
+    @JoinTable(
+            name = "evento_aziende",
+            joinColumns = @JoinColumn(name = "evento_id"),
+            inverseJoinColumns = @JoinColumn(name = "azienda_id")
+    )
+    private Set<Azienda> aziendeInvitate = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -118,5 +128,29 @@ public class Evento {
 
     public void setPartecipanti(Set<Acquirente> partecipanti) {
         this.partecipanti = partecipanti;
+    }
+
+    public Set<Azienda> getAziendeInvitate() {
+        return aziendeInvitate;
+    }
+
+    public void setAziendeInvitate(Set<Azienda> aziendeInvitate) {
+        this.aziendeInvitate = aziendeInvitate;
+    }
+
+    public double getLatitudine() {
+        return latitudine;
+    }
+
+    public void setLatitudine(double latitudine) {
+        this.latitudine = latitudine;
+    }
+
+    public double getLongitudine() {
+        return longitudine;
+    }
+
+    public void setLongitudine(double longitudine) {
+        this.longitudine = longitudine;
     }
 }

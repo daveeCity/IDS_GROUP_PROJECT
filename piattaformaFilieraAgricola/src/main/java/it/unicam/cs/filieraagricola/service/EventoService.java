@@ -41,4 +41,12 @@ public interface EventoService {
      * Permette a un Acquirente di registrarsi a un evento.
      */
     void partecipaEvento(Long eventoId, Long acquirenteId);
+
+    /**
+     * Permette a un Animatore di invitare un'azienda a un evento.
+     * @param eventoId ID dell'evento
+     * @param animatoreId ID dell'animatore che sta effettuando l'invito (per verifica permessi)
+     * @param aziendaId ID dell'azienda da invitare
+     */
+    void invitaAzienda(Long eventoId, Long animatoreId, Long aziendaId);
 }

@@ -11,4 +11,6 @@ public class RegisterRequestDTO {
     private String partitaIva;
     private String indirizzo;
     private String descrizione;
+    private Double latitudine;
+    private Double longitudine;
 }

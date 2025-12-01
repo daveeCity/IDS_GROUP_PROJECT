@@ -51,4 +51,23 @@ public class EventoController {
         eventoService.annullaEvento(id);
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * Endpoint per invitare un'azienda a un evento.
+     * Solo per ANIMATORE (già protetto da SecurityConfig per il path /api/eventi/**)
+     */
+    @PostMapping("/{id}/invita")
+    public ResponseEntity<String> invitaAzienda(@PathVariable Long id, @RequestParam Long aziendaId) {
+        // 1. Recupera username dell'animatore loggato
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // 2. Recupera l'entità Animatore
+        Utente animatore = utenteRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("Animatore non trovato"));
+
+        // 3. Chiama il service
+        eventoService.invitaAzienda(id, animatore.getId(), aziendaId);
+
+        return ResponseEntity.ok("Azienda invitata con successo all'evento.");
+    }
 }

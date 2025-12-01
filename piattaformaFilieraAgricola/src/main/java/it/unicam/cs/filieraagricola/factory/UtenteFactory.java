@@ -4,15 +4,9 @@ import it.unicam.cs.filieraagricola.DTO.RegisterRequestDTO;
 import it.unicam.cs.filieraagricola.model.*;
 import org.springframework.stereotype.Component;
 
-@Component // Lo rendiamo un Bean Spring
+@Component
 public class UtenteFactory {
 
-    /**
-     * Factory Method per creare un Utente
-     * @param dto I dati di registrazione
-     * @param hashedPassword La password già codificata
-     * @return L'istanza concreta di Utente
-     */
     public Utente creaUtente(RegisterRequestDTO dto, String hashedPassword) {
 
         String ruolo = dto.getRuolo().toUpperCase();
@@ -22,19 +16,62 @@ public class UtenteFactory {
                 return new Acquirente(dto.getUsername(), dto.getEmail(), hashedPassword);
 
             case "PRODUTTORE":
-                return new Produttore(dto.getUsername(), dto.getEmail(), hashedPassword,
-                        dto.getNomeAzienda(), dto.getPartitaIva(),
-                        dto.getIndirizzo(), dto.getDescrizione());
+                // 1. Creiamo l'oggetto usando il costruttore ESISTENTE (senza lat/long)
+                Produttore produttore = new Produttore(
+                        dto.getUsername(),
+                        dto.getEmail(),
+                        hashedPassword,
+                        dto.getNomeAzienda(),
+                        dto.getPartitaIva(),
+                        dto.getIndirizzo(),
+                        dto.getDescrizione(),
+                        dto.getLongitudine(),
+                        dto.getLatitudine()
+                );
+
+                // 2. Impostiamo le coordinate separatamente (se presenti nel DTO)
+                if (dto.getLatitudine() != null) produttore.setLatitudine(dto.getLatitudine());
+                if (dto.getLongitudine() != null) produttore.setLongitudine(dto.getLongitudine());
+
+                return produttore;
 
             case "TRASFORMATORE":
-                return new Trasformatore(dto.getUsername(), dto.getEmail(), hashedPassword,
-                        dto.getNomeAzienda(), dto.getPartitaIva(),
-                        dto.getIndirizzo(), dto.getDescrizione());
+                Trasformatore trasformatore = new Trasformatore(
+                        dto.getUsername(),
+                        dto.getEmail(),
+                        hashedPassword,
+                        dto.getNomeAzienda(),
+                        dto.getPartitaIva(),
+                        dto.getIndirizzo(),
+                        dto.getDescrizione(),
+                        dto.getLongitudine(),
+                        dto.getLatitudine()
+                );
+
+                // Anche i trasformatori hanno una sede
+                if (dto.getLatitudine() != null) trasformatore.setLatitudine(dto.getLatitudine());
+                if (dto.getLongitudine() != null) trasformatore.setLongitudine(dto.getLongitudine());
+
+                return trasformatore;
 
             case "DISTRIBUTORE":
-                return new Distributore(dto.getUsername(), dto.getEmail(), hashedPassword,
-                        dto.getNomeAzienda(), dto.getPartitaIva(),
-                        dto.getIndirizzo(), dto.getDescrizione());
+                Distributore distributore = new Distributore(
+                        dto.getUsername(),
+                        dto.getEmail(),
+                        hashedPassword,
+                        dto.getNomeAzienda(),
+                        dto.getPartitaIva(),
+                        dto.getIndirizzo(),
+                        dto.getDescrizione(),
+                        dto.getLongitudine(),
+                        dto.getLatitudine()
+                );
+
+                // Anche i distributori hanno una sede
+                if (dto.getLatitudine() != null) distributore.setLatitudine(dto.getLatitudine());
+                if (dto.getLongitudine() != null) distributore.setLongitudine(dto.getLongitudine());
+
+                return distributore;
 
             case "CURATORE":
                 return new Curatore(dto.getUsername(), dto.getEmail(), hashedPassword);

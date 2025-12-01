@@ -20,8 +20,10 @@ public abstract class Azienda extends Utente {
 
     private String descrizione;
 
-    // Relazione: Un'azienda ha molti prodotti
-    // "azienda" è il nome del campo nella classe Prodotto
+    private double latitudine;
+
+    private double longitudine;
+
     @OneToMany(mappedBy = "azienda")
     private List<Prodotto> prodotti;
 
@@ -31,12 +33,14 @@ public abstract class Azienda extends Utente {
     }
 
     public Azienda(String username, String email, String password,
-                   String nomeAzienda, String partitaIva, String indirizzo, String descrizione) {
+                   String nomeAzienda, String partitaIva, String indirizzo, String descrizione, Double latitudine, Double longitudine) {
         super(username, email, password);
         this.nomeAzienda = nomeAzienda;
         this.partitaIva = partitaIva;
         this.indirizzo = indirizzo;
         this.descrizione = descrizione;
+        this.latitudine = latitudine;
+        this.longitudine = longitudine;
     }
 
     public String getNomeAzienda() {
@@ -87,5 +91,25 @@ public abstract class Azienda extends Utente {
     public void setProdotti(List<Prodotto> prodotti) {
 
         this.prodotti = prodotti;
+    }
+
+    public double getLatitudine() {
+
+        return latitudine;
+    }
+
+    public void setLatitudine(double latitudine) {
+
+        this.latitudine = latitudine;
+    }
+
+    public double getLongitudine() {
+
+        return longitudine;
+    }
+
+    public void setLongitudine(double longitudine) {
+
+        this.longitudine = longitudine;
     }
 }

@@ -19,7 +19,6 @@ public class EmailNotificationObserver implements ModerationObserver {
                 "è stato " + action + ".\n\n" +
                 "Saluti,\nIl Team della Piattaforma";
 
-        // Logica fittizia per l'invio email
         System.out.println("--- INVIO EMAIL ---");
         System.out.println("A: " + emailAzienda);
         System.out.println("Oggetto: " + subject);

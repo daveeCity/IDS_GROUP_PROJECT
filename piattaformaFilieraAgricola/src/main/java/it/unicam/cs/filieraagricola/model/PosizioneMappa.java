@@ -4,18 +4,18 @@ package it.unicam.cs.filieraagricola.model;
 import jakarta.persistence.Embeddable;
 
 
-@Embeddable // Indica a JPA che questa classe può essere inclusa in un'altra entità
+@Embeddable
 public class PosizioneMappa {
 
-    private double latitudine;
-    private double longitudine;
+    private Double latitudine;
+    private Double longitudine;
     private String indirizzoTestuale;
 
-    public double getLatitudine() {
+    public Double getLatitudine() {
         return latitudine;
     }
 
-    public void setLatitudine(double latitudine) {
+    public void setLatitudine(Double latitudine) {
         this.latitudine = latitudine;
     }
 
@@ -27,11 +27,11 @@ public class PosizioneMappa {
         this.indirizzoTestuale = indirizzoTestuale;
     }
 
-    public double getLongitudine() {
+    public Double getLongitudine() {
         return longitudine;
     }
 
-    public void setLongitudine(double longitudine) {
+    public void setLongitudine(Double longitudine) {
         this.longitudine = longitudine;
     }
 }

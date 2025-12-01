@@ -15,4 +15,6 @@ public class EventoDTO {
     private String stato;
     private Long animatoreId;
     private String nomeAnimatore;
+    private Double latitudine;
+    private Double longitudine;
 }

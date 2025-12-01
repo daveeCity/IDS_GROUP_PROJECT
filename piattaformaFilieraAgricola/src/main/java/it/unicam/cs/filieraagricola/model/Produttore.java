@@ -13,7 +13,7 @@ public class Produttore extends Azienda {
     }
 
     public Produttore(String username, String email, String password,
-                      String nomeAzienda, String partitaIva, String indirizzo, String descrizione) {
-        super(username, email, password, nomeAzienda, partitaIva, indirizzo, descrizione);
+                      String nomeAzienda, String partitaIva, String indirizzo, String descrizione, Double latitudine, Double longitudine) {
+        super(username, email, password, nomeAzienda, partitaIva, indirizzo, descrizione, latitudine, longitudine);
     }
 }

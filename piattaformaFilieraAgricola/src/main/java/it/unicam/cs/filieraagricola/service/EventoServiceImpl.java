@@ -6,6 +6,7 @@ import it.unicam.cs.filieraagricola.model.*;
 import it.unicam.cs.filieraagricola.repository.EventoRepository;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -52,8 +53,10 @@ public class EventoServiceImpl implements EventoService {
         evento.setDataOraFine(request.getDataOraFine());
         evento.setLuogo(request.getLuogo());
         evento.setTipo(TipoEvento.valueOf(request.getTipo().toUpperCase()));
-        evento.setStato(StatoEvento.PLANNED); // Default
+        evento.setStato(StatoEvento.PLANNED);
         evento.setAnimatore(animatore);
+        evento.setLatitudine(request.getLatitudine());
+        evento.setLongitudine(request.getLongitudine());
 
         Evento salvato = eventoRepository.save(evento);
         return convertToDTO(salvato);
@@ -96,6 +99,38 @@ public class EventoServiceImpl implements EventoService {
         // eventoRepository.save(evento);
 
         System.out.println("L'acquirente " + acquirente.getUsername() + " si è registrato all'evento " + evento.getTitolo());
+    }
+
+    @Override
+    @Transactional
+    public void invitaAzienda(Long eventoId, Long animatoreId, Long aziendaId) {
+        // 1. Recupera l'Evento
+        Evento evento = eventoRepository.findById(eventoId)
+                .orElseThrow(() -> new EntityNotFoundException("Evento non trovato: " + eventoId));
+
+        // 2. Verifica di Sicurezza: Solo l'Animatore creatore può invitare
+        if (!evento.getAnimatore().getId().equals(animatoreId)) {
+            throw new IllegalArgumentException("Non sei l'organizzatore di questo evento.");
+        }
+
+        // 3. Recupera l'Azienda da invitare
+        Utente utenteTarget = utenteRepository.findById(aziendaId)
+                .orElseThrow(() -> new EntityNotFoundException("Azienda non trovata: " + aziendaId));
+
+        // 4. Verifica che l'utente sia effettivamente un'Azienda (Produttore o Trasformatore)
+        // Nota: Distributore è un'Azienda, ma la richiesta specificava Produttori o Trasformatori.
+        // Se vuoi includere tutti i tipi di Azienda, basta instanceof Azienda.
+        if (!(utenteTarget instanceof Produttore) && !(utenteTarget instanceof Trasformatore)) {
+            throw new IllegalArgumentException("L'utente selezionato non è un Produttore o Trasformatore.");
+        }
+
+        Azienda azienda = (Azienda) utenteTarget;
+
+        // 5. Aggiungi l'azienda alla lista e salva
+        evento.getAziendeInvitate().add(azienda);
+        eventoRepository.save(evento);
+
+        System.out.println("Invito inviato a " + azienda.getNomeAzienda() + " per l'evento " + evento.getTitolo());
     }
 
     private Evento findEventoById(Long id) {

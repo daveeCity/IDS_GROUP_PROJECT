@@ -76,6 +76,12 @@ public class AutenticazioneServiceImpl implements AutenticazioneService {
         Utente utente = utenteRepository.findByUsername(request.getUsername()).get();
         String ruolo = utente.getClass().getAnnotation(jakarta.persistence.DiscriminatorValue.class).value();
 
-        return new AuthResponseDTO(jwt, utente.getUsername(), ruolo);
+        return new AuthResponseDTO(
+                utente.getId(),
+                jwt,
+                utente.getUsername(),
+                utente.getRuoloString()
+
+        );
     }
 }
