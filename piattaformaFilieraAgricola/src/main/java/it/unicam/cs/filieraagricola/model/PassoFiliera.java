@@ -19,7 +19,9 @@ public class PassoFiliera {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoPassoFiliera tipoPasso;
-    // ---------------
+
+    @Enumerated(EnumType.STRING)
+    private StatoApprovazione statoApprovazione = StatoApprovazione.IN_ATTESA;
 
     private String descrizione; // Es. "Semina grano duro varietà Senatore Cappelli"
     private LocalDateTime dataOra;
@@ -99,4 +101,6 @@ public class PassoFiliera {
     public void setTipoPasso(TipoPassoFiliera tipoPasso) {
         this.tipoPasso = tipoPasso;
     }
+    public StatoApprovazione getStatoApprovazione() { return statoApprovazione; }
+    public void setStatoApprovazione(StatoApprovazione statoApprovazione) { this.statoApprovazione = statoApprovazione; }
 }

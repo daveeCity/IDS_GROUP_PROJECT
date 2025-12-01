@@ -18,11 +18,15 @@ public class DettaglioOrdine {
 
     // Relazione: molti dettagli puntano a un Prodotto
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prodotto_id", nullable = false)
+    @JoinColumn(name = "prodotto_id")
     private Prodotto prodotto;
 
     @Column(nullable = false)
     private int quantita;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pacco_id")
+    private PaccoProdotto pacco;
 
     // Memorizza il prezzo al momento dell'acquisto,
     // per evitare che future modifiche al prezzo del prodotto
@@ -33,11 +37,10 @@ public class DettaglioOrdine {
 
     public DettaglioOrdine() {}
 
-    public DettaglioOrdine(Ordine ordine, Prodotto prodotto, int quantita) {
+    public DettaglioOrdine(Ordine ordine, int quantita, double prezzoEffettivo) {
         this.ordine = ordine;
-        this.prodotto = prodotto;
         this.quantita = quantita;
-        this.prezzoUnitario = prodotto.getPrezzo(); // Fissa il prezzo
+        this.prezzoUnitario = prezzoEffettivo;
     }
 
     public Long getId() {
@@ -88,5 +91,15 @@ public class DettaglioOrdine {
     public void setPrezzoUnitario(double prezzoUnitario) {
 
         this.prezzoUnitario = prezzoUnitario;
+    }
+
+    public PaccoProdotto getPacco() {
+
+        return pacco;
+    }
+
+    public void setPacco(PaccoProdotto pacco) {
+
+        this.pacco = pacco;
     }
 }

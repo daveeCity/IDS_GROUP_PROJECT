@@ -1,8 +1,10 @@
 package it.unicam.cs.filieraagricola.config;
 
+import it.unicam.cs.filieraagricola.model.StatoAccount;
 import it.unicam.cs.filieraagricola.model.Utente;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         // 1. Recupera l'utente generico (Hibernate istanzierà la sottoclasse corretta: Produttore, Acquirente, ecc.)
         Utente utente = utenteRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Utente non trovato: " + username));
+
+        if (utente.getStatoAccount() != StatoAccount.ATTIVO) {
+            throw new DisabledException("Account non attivo. In attesa di approvazione dal Gestore.");
+        }
 
         // 2. Determina il ruolo basandosi sulla Classe Java dell'istanza
         String ruolo = ricavaRuoloDaClasse(utente);

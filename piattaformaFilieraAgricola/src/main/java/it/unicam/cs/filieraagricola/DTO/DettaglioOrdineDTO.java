@@ -8,4 +8,7 @@ public class DettaglioOrdineDTO {
     private String nomeProdotto;
     private int quantita;
     private double prezzoUnitario;
+
+    public void setTotaleElemento(double v) {
+    }
 }

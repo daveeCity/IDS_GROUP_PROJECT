@@ -3,10 +3,7 @@ package it.unicam.cs.filieraagricola.test;
 import it.unicam.cs.filieraagricola.DTO.ModerazioneRequestDTO;
 import it.unicam.cs.filieraagricola.DTO.ProdottoDTO;
 import it.unicam.cs.filieraagricola.mapper.ProdottoMapper;
-import it.unicam.cs.filieraagricola.model.Azienda;
-import it.unicam.cs.filieraagricola.model.Produttore;
-import it.unicam.cs.filieraagricola.model.Prodotto;
-import it.unicam.cs.filieraagricola.model.StatoProdotto;
+import it.unicam.cs.filieraagricola.model.*;
 import it.unicam.cs.filieraagricola.observer.ModerationObserver;
 import it.unicam.cs.filieraagricola.repository.ProdottoRepository;
 import it.unicam.cs.filieraagricola.service.ModerazioneServiceImpl;
@@ -37,7 +34,7 @@ class ModerazioneServiceTest {
     @Mock
     private ProdottoMapper prodottoMapper;
 
-    @Mock // Mockiamo un Observer per vedere se viene notificato
+    @Mock
     private ModerationObserver observerMock;
 
     @InjectMocks
@@ -57,7 +54,7 @@ class ModerazioneServiceTest {
         // Setup Prodotto
         prodottoInAttesa = new Prodotto("Mela", "Desc", 1.0, 100, azienda);
         prodottoInAttesa.setId(1L);
-        prodottoInAttesa.setStato(StatoProdotto.IN_ATTESA);
+        prodottoInAttesa.setStato(StatoApprovazione.IN_ATTESA);
 
         // Registriamo il mock observer al service
         moderazioneService.addObserver(observerMock);
@@ -67,7 +64,7 @@ class ModerazioneServiceTest {
     @Test
     void testGetProdottiInAttesa() {
         // Arrange
-        when(prodottoRepository.findByStato(StatoProdotto.IN_ATTESA))
+        when(prodottoRepository.findByStato(StatoApprovazione.IN_ATTESA))
                 .thenReturn(List.of(prodottoInAttesa));
         when(prodottoMapper.toDTO(any(Prodotto.class))).thenReturn(new ProdottoDTO());
 
@@ -76,7 +73,7 @@ class ModerazioneServiceTest {
 
         // Assert
         assertEquals(1, result.size());
-        verify(prodottoRepository).findByStato(StatoProdotto.IN_ATTESA);
+        verify(prodottoRepository).findByStato(StatoApprovazione.IN_ATTESA);
     }
 
     // --- TEST 2: APPROVAZIONE PRODOTTO ---
@@ -92,7 +89,7 @@ class ModerazioneServiceTest {
 
         // Assert
         // 1. Verifica cambio stato
-        assertEquals(StatoProdotto.APPROVATO, prodottoInAttesa.getStato());
+        assertEquals(StatoApprovazione.APPROVATO, prodottoInAttesa.getStato());
 
         // 2. Verifica salvataggio
         verify(prodottoRepository).save(prodottoInAttesa);
@@ -117,7 +114,7 @@ class ModerazioneServiceTest {
 
         // Assert
         // 1. Verifica cambio stato
-        assertEquals(StatoProdotto.RIFIUTATO, prodottoInAttesa.getStato());
+        assertEquals(StatoApprovazione.RIFIUTATO, prodottoInAttesa.getStato());
 
         // 2. Verifica Observer con motivazione
         verify(observerMock, times(1))
@@ -151,7 +148,6 @@ class ModerazioneServiceTest {
         moderazioneService.approvaProdotto(1L);
 
         // Assert
-        // L'observer NON deve essere stato chiamato perché rimosso
         verify(observerMock, never()).update(any(), any());
     }
 }

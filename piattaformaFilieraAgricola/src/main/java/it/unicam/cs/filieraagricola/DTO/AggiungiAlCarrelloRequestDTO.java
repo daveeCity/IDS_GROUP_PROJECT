@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AggiungiAlCarrelloRequestDTO {
-    private Long prodottoId;
+    private Long idOggetto;
     private int quantita;
+    private String tipo;
 }

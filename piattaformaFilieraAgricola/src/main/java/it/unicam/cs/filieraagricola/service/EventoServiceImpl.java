@@ -21,10 +21,8 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public List<EventoDTO> getEventiPubblici() {
         // Mostra solo eventi PIANIFICATI o COMPLETATI
-        return eventoRepository.findAll().stream()
-                .filter(e -> e.getStato() != StatoEvento.CANCELLED)
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return eventoRepository.findByStatoApprovazione(StatoApprovazione.APPROVATO)
+                .stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -57,9 +55,11 @@ public class EventoServiceImpl implements EventoService {
         evento.setAnimatore(animatore);
         evento.setLatitudine(request.getLatitudine());
         evento.setLongitudine(request.getLongitudine());
+        evento.setStatoApprovazione(StatoApprovazione.IN_ATTESA);
 
         Evento salvato = eventoRepository.save(evento);
         return convertToDTO(salvato);
+
     }
 
     @Override

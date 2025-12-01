@@ -66,12 +66,16 @@ public class OrdineMapper {
         // Recupero dati informativi dal Prodotto collegato
         if (entity.getProdotto() != null) {
             dto.setProdottoId(entity.getProdotto().getId());
-            dto.setNomeProdotto(entity.getProdotto().getNome());
-        } else {
-            dto.setProdottoId(null);
-            dto.setNomeProdotto("Prodotto eliminato o sconosciuto");
+            dto.setNomeProdotto(entity.getProdotto().getNome()); // Magari rinomina il campo DTO in "nomeOggetto" se vuoi essere pulito, o usa questo
+            dto.setPrezzoUnitario(entity.getProdotto().getPrezzo());
+        } else if (entity.getPacco() != null) {
+            // Usiamo gli stessi campi del DTO riciclandoli, oppure ne aggiungi di nuovi
+            dto.setProdottoId(entity.getPacco().getId()); // Qui metti ID pacco
+            dto.setNomeProdotto("[PACCO] " + entity.getPacco().getNome());
+            dto.setPrezzoUnitario(entity.getPacco().getPrezzo());
         }
 
+        dto.setTotaleElemento(dto.getPrezzoUnitario() * entity.getQuantita());
         return dto;
     }
 }

@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui.html")).permitAll()
 
+
                         // --- 2. REGOLE EVENTI (Ordine Fondamentale!) ---
 
                         // A. L'eccezione: Solo l'ACQUIRENTE può fare POST su "partecipa"
@@ -53,9 +54,13 @@ public class SecurityConfig {
 
                         .requestMatchers(AntPathRequestMatcher.antMatcher( "/api/mappa/**")).permitAll()
 
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/social/**")).permitAll()
+
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/tracciabilita/**")).hasAnyRole("PRODUTTORE", "TRASFORMATORE")
 
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/tracciabilita/**")).authenticated()
+
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/gestore/**")).hasRole("GESTORE")
 
                         // --- 3. Default ---
                         .anyRequest().authenticated()

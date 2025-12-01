@@ -69,7 +69,7 @@ class MarketplaceServiceTest {
         prodottoTest.setNome("Mela Bio");
         prodottoTest.setPrezzo(1.50);
         prodottoTest.setQuantitaDisponibile(100);
-        prodottoTest.setStato(StatoProdotto.APPROVATO);
+        prodottoTest.setStato(StatoApprovazione.APPROVATO);
     }
 
     @AfterEach
@@ -168,7 +168,7 @@ class MarketplaceServiceTest {
 
     @Test
     void testAggiungiAlCarrello_ProdottoNonApprovato() {
-        prodottoTest.setStato(StatoProdotto.IN_ATTESA); // Prodotto non approvato
+        prodottoTest.setStato(StatoApprovazione.IN_ATTESA); // Prodotto non approvato
 
         when(carrelloRepository.findByAcquirenteId(1L)).thenReturn(Optional.of(carrelloTest));
         when(prodottoRepository.findById(50L)).thenReturn(Optional.of(prodottoTest));

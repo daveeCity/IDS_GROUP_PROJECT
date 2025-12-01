@@ -3,6 +3,7 @@ import it.unicam.cs.filieraagricola.DTO.AuthResponseDTO;
 import it.unicam.cs.filieraagricola.DTO.LoginRequestDTO;
 import it.unicam.cs.filieraagricola.DTO.RegisterRequestDTO;
 import it.unicam.cs.filieraagricola.factory.UtenteFactory;
+import it.unicam.cs.filieraagricola.model.StatoAccount;
 import it.unicam.cs.filieraagricola.model.Utente;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,16 @@ public class AutenticazioneServiceImpl implements AutenticazioneService {
 
         // 4. Salva l'utente
         utenteRepository.save(nuovoUtente);
+
+        if (nuovoUtente.getStatoAccount() == StatoAccount.IN_ATTESA) {
+            // Restituiamo il DTO con token NULL, segnalando che la registrazione è ok ma serve approvazione
+            return new AuthResponseDTO(
+                    nuovoUtente.getId(),
+                    null,
+                    nuovoUtente.getUsername(),
+                    nuovoUtente.getRuoloString()
+            );
+        }
 
         // 5. Esegui il login automatico per ottenere il token
         return loginUtente(new LoginRequestDTO(request.getUsername(), request.getPassword()));

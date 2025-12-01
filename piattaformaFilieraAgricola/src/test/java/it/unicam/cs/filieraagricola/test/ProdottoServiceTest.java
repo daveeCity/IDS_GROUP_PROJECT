@@ -2,10 +2,7 @@ package it.unicam.cs.filieraagricola.test;
 
 import it.unicam.cs.filieraagricola.DTO.ProdottoDTO;
 import it.unicam.cs.filieraagricola.DTO.ProdottoRequestDTO;
-import it.unicam.cs.filieraagricola.model.Azienda;
-import it.unicam.cs.filieraagricola.model.Prodotto;
-import it.unicam.cs.filieraagricola.model.Produttore;
-import it.unicam.cs.filieraagricola.model.StatoProdotto;
+import it.unicam.cs.filieraagricola.model.*;
 import it.unicam.cs.filieraagricola.repository.ProdottoRepository;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import it.unicam.cs.filieraagricola.service.ProdottoServiceImpl;
@@ -57,12 +54,12 @@ class ProdottoServiceTest {
         // Setup Prodotto APPROVATO (per il catalogo)
         prodottoApprovato = new Prodotto("Mela Bio", "Buona", 1.50, 100, aziendaTest);
         prodottoApprovato.setId(10L);
-        prodottoApprovato.setStato(StatoProdotto.APPROVATO);
+        prodottoApprovato.setStato(StatoApprovazione.APPROVATO);
 
         // Setup Prodotto IN_ATTESA (appena creato)
         prodottoInAttesa = new Prodotto("Vino Rosso", "DOC", 12.00, 50, aziendaTest);
         prodottoInAttesa.setId(11L);
-        prodottoInAttesa.setStato(StatoProdotto.IN_ATTESA);
+        prodottoInAttesa.setStato(StatoApprovazione.IN_ATTESA);
 
         // Setup DTO per le richieste
         requestDTO = new ProdottoRequestDTO("Mela Golden", "Nuova descrizione", 2.00, 200);
@@ -72,7 +69,7 @@ class ProdottoServiceTest {
     @Test
     void testGetCatalogoProdotti_MostraSoloApprovati() {
         // Arrange: Il repository restituisce una lista mista, ma il metodo findByStato filtra già
-        when(prodottoRepository.findByStato(StatoProdotto.APPROVATO))
+        when(prodottoRepository.findByStato(StatoApprovazione.APPROVATO))
                 .thenReturn(List.of(prodottoApprovato));
 
         // Act
@@ -82,7 +79,7 @@ class ProdottoServiceTest {
         assertEquals(1, risultati.size());
         assertEquals("Mela Bio", risultati.get(0).getNome());
         assertEquals("APPROVATO", risultati.get(0).getStato());
-        verify(prodottoRepository).findByStato(StatoProdotto.APPROVATO);
+        verify(prodottoRepository).findByStato(StatoApprovazione.APPROVATO);
     }
 
     // --- TEST 2: CREAZIONE PRODOTTO ---
@@ -106,7 +103,7 @@ class ProdottoServiceTest {
         assertEquals("Fattoria Felice", risultato.getNomeAzienda());
 
         // Verifica cruciale: Un prodotto appena creato DEVE essere IN_ATTESA
-        assertEquals(StatoProdotto.IN_ATTESA.name(), risultato.getStato());
+        assertEquals(StatoApprovazione.IN_ATTESA.name(), risultato.getStato());
 
         verify(prodottoRepository).save(any(Prodotto.class));
     }
@@ -138,7 +135,7 @@ class ProdottoServiceTest {
         assertEquals("Mela Golden", risultato.getNome()); // Nome cambiato
 
         // Verifica cruciale: La modifica deve invalidare l'approvazione precedente
-        assertEquals(StatoProdotto.IN_ATTESA.name(), risultato.getStato());
+        assertEquals(StatoApprovazione.IN_ATTESA.name(), risultato.getStato());
     }
 
     // --- TEST 4: RICERCA ---

@@ -23,10 +23,13 @@ public class Evento {
     private double longitudine;
 
     @Enumerated(EnumType.STRING)
-    private TipoEvento tipo; // <-- Refactored
+    private TipoEvento tipo;
 
     @Enumerated(EnumType.STRING)
-    private StatoEvento stato; // <-- Refactored
+    private StatoEvento stato;
+
+    @Enumerated(EnumType.STRING)
+    private StatoApprovazione statoApprovazione = StatoApprovazione.IN_ATTESA;
 
     // Relazione: Creato da un Animatore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -153,4 +156,6 @@ public class Evento {
     public void setLongitudine(double longitudine) {
         this.longitudine = longitudine;
     }
+    public StatoApprovazione getStatoApprovazione() { return statoApprovazione; }
+    public void setStatoApprovazione(StatoApprovazione statoApprovazione) { this.statoApprovazione = statoApprovazione; }
 }

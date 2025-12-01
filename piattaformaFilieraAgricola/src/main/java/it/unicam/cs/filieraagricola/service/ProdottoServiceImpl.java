@@ -1,14 +1,14 @@
 package it.unicam.cs.filieraagricola.service;
 
-// package it.unicam.cs.filieraagricola.service;
+
 
 import it.unicam.cs.filieraagricola.DTO.ProdottoDTO;
 import it.unicam.cs.filieraagricola.DTO.ProdottoRequestDTO;
 import it.unicam.cs.filieraagricola.model.Azienda;
 import it.unicam.cs.filieraagricola.model.Prodotto;
-import it.unicam.cs.filieraagricola.model.StatoProdotto;
+import it.unicam.cs.filieraagricola.model.StatoApprovazione;
 import it.unicam.cs.filieraagricola.repository.ProdottoRepository;
-import it.unicam.cs.filieraagricola.repository.UtenteRepository; // Usiamo questo per trovare l'azienda
+import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +32,7 @@ public class ProdottoServiceImpl implements ProdottoService {
 
     @Override
     public List<ProdottoDTO> getCatalogoProdotti() {
-        return prodottoRepository.findByStato(StatoProdotto.APPROVATO)
+        return prodottoRepository.findByStato(StatoApprovazione.APPROVATO)
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -48,7 +48,7 @@ public class ProdottoServiceImpl implements ProdottoService {
     public List<ProdottoDTO> cercaProdottiPerNome(String nome) {
         return prodottoRepository.findByNomeContainingIgnoreCase(nome)
                 .stream()
-                .filter(p -> p.getStato() == StatoProdotto.APPROVATO) // Mostra solo approvati
+                .filter(p -> p.getStato() == StatoApprovazione.APPROVATO) // Mostra solo approvati
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -92,7 +92,7 @@ public class ProdottoServiceImpl implements ProdottoService {
         prodotto.setDescrizione(request.getDescrizione());
         prodotto.setPrezzo(request.getPrezzo());
         prodotto.setQuantitaDisponibile(request.getQuantitaDisponibile());
-        prodotto.setStato(StatoProdotto.IN_ATTESA); // Ogni modifica richiede ri-approvazione
+        prodotto.setStato(StatoApprovazione.IN_ATTESA); // Ogni modifica richiede ri-approvazione
 
         Prodotto aggiornato = prodottoRepository.save(prodotto);
         return convertToDTO(aggiornato);

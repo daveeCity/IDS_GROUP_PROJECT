@@ -22,19 +22,16 @@ public class ElementoCarrelloMapper {
         // Controllo di sicurezza sul prodotto
         if (entity.getProdotto() != null) {
             dto.setProdottoId(entity.getProdotto().getId());
-            dto.setNomeProdotto(entity.getProdotto().getNome());
+            dto.setNomeProdotto(entity.getProdotto().getNome()); // Magari rinomina il campo DTO in "nomeOggetto" se vuoi essere pulito, o usa questo
             dto.setPrezzoUnitario(entity.getProdotto().getPrezzo());
-
-            // Calcolo del totale (Prezzo * Quantità)
-            double totaleCalcolato = entity.getProdotto().getPrezzo() * entity.getQuantita();
-            dto.setTotaleElemento(totaleCalcolato);
-        } else {
-            // Fallback se il prodotto è stato eliminato dal DB
-            dto.setNomeProdotto("Prodotto non disponibile");
-            dto.setPrezzoUnitario(0.0);
-            dto.setTotaleElemento(0.0);
+        } else if (entity.getPacco() != null) {
+            // Usiamo gli stessi campi del DTO riciclandoli, oppure ne aggiungi di nuovi
+            dto.setProdottoId(entity.getPacco().getId()); // Qui metti ID pacco
+            dto.setNomeProdotto("[PACCO] " + entity.getPacco().getNome());
+            dto.setPrezzoUnitario(entity.getPacco().getPrezzo());
         }
 
+        dto.setTotaleElemento(dto.getPrezzoUnitario() * entity.getQuantita());
         return dto;
     }
 }

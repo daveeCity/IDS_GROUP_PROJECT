@@ -3,6 +3,7 @@ package it.unicam.cs.filieraagricola;
 import it.unicam.cs.filieraagricola.DTO.*;
 import it.unicam.cs.filieraagricola.model.Azienda;
 import it.unicam.cs.filieraagricola.model.Distributore;
+import it.unicam.cs.filieraagricola.model.StatoAccount;
 import it.unicam.cs.filieraagricola.model.Utente;
 import it.unicam.cs.filieraagricola.repository.UtenteRepository;
 import it.unicam.cs.filieraagricola.service.*;
@@ -53,6 +54,14 @@ public class DatiIniziali implements CommandLineRunner {
             autenticazioneService.registraUtente(createDto("annaNeri", "ACQUIRENTE", null, null, null, null, null));
             autenticazioneService.registraUtente(createDto("curatoreDemo", "CURATORE", null, null, null, null, null));
             autenticazioneService.registraUtente(createDto("animatoreDemo", "ANIMATORE", null, null, null, null, null));
+            autenticazioneService.registraUtente(createDto("lucaNeri", "GESTORE", null, null, null, null, null));
+            System.out.println("... Attivazione Account Demo ...");
+            attivaUtenteDemo("fattoriaRossi");
+            attivaUtenteDemo("caseificioVerdi");
+            attivaUtenteDemo("tipicoMarche");
+            attivaUtenteDemo("animatoreDemo");
+            attivaUtenteDemo("curatoreDemo");
+            attivaUtenteDemo("lucaNeri");
 
             // Recupero ID utili
             Azienda fattoria = (Azienda) utenteRepository.findByUsername("fattoriaRossi").get();
@@ -137,5 +146,11 @@ public class DatiIniziali implements CommandLineRunner {
         return dto;
     }
 
+    private void attivaUtenteDemo(String username) {
+        utenteRepository.findByUsername(username).ifPresent(u -> {
+            u.setStatoAccount(StatoAccount.ATTIVO);
+            utenteRepository.save(u);
+        });
+    }
 
 }

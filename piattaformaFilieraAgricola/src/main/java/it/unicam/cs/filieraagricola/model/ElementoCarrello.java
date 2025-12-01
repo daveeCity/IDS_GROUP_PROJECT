@@ -19,8 +19,12 @@ public class ElementoCarrello {
 
     // Relazione: Molti elementi puntano a un Prodotto
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prodotto_id", nullable = false)
+    @JoinColumn(name = "prodotto_id")
     private Prodotto prodotto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pacco_id")
+    private PaccoProdotto pacco;
 
     @Column(nullable = false)
     private int quantita;
@@ -33,6 +37,18 @@ public class ElementoCarrello {
         this.carrello = carrello;
         this.prodotto = prodotto;
         this.quantita = quantita;
+    }
+
+    public double getPrezzoUnitarioCorrente() {
+        if (prodotto != null) return prodotto.getPrezzo();
+        if (pacco != null) return pacco.getPrezzo();
+        return 0.0;
+    }
+
+    public String getNomeOggetto() {
+        if (prodotto != null) return prodotto.getNome();
+        if (pacco != null) return pacco.getNome();
+        return "Oggetto rimosso";
     }
 
     public Long getId() {
@@ -65,5 +81,14 @@ public class ElementoCarrello {
 
     public void setQuantita(int quantita) {
         this.quantita = quantita;
+    }
+
+    public PaccoProdotto getPacco() {
+
+        return pacco;
+    }
+
+    public void setPacco(PaccoProdotto pacco) {
+        this.pacco = pacco;
     }
 }

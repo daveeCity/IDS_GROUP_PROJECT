@@ -28,7 +28,7 @@ public class Prodotto {
 
     // Stato del prodotto per la moderazione
     @Enumerated(EnumType.STRING)
-    private StatoProdotto stato;
+    private StatoApprovazione stato;
 
     @OneToOne(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
     private TracciabilitaProdotto tracciabilita;
@@ -37,7 +37,8 @@ public class Prodotto {
     private List<ElementoCarrello> inCarrelli;
     // Costruttori, Getter e Setter
 
-    public Prodotto() {}
+    public Prodotto() {
+    }
 
     public Prodotto(String nome, String descrizione, double prezzo, int quantitaDisponibile, Azienda azienda) {
         this.nome = nome;
@@ -45,7 +46,7 @@ public class Prodotto {
         this.prezzo = prezzo;
         this.quantitaDisponibile = quantitaDisponibile;
         this.azienda = azienda;
-        this.stato = StatoProdotto.IN_ATTESA;
+        this.stato = StatoApprovazione.IN_ATTESA;
     }
 
     public Long getId() {
@@ -56,11 +57,11 @@ public class Prodotto {
         this.id = id;
     }
 
-    public StatoProdotto getStato() {
+    public StatoApprovazione getStato() {
         return stato;
     }
 
-    public void setStato(StatoProdotto stato) {
+    public void setStato(StatoApprovazione stato) {
         this.stato = stato;
     }
 

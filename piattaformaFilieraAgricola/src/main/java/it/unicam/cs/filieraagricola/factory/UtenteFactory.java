@@ -13,7 +13,9 @@ public class UtenteFactory {
 
         switch (ruolo) {
             case "ACQUIRENTE":
-                return new Acquirente(dto.getUsername(), dto.getEmail(), hashedPassword);
+                Acquirente acquirente = new Acquirente(dto.getUsername(), dto.getEmail(), hashedPassword);
+                acquirente.setStatoAccount(StatoAccount.ATTIVO);
+                return acquirente;
 
             case "PRODUTTORE":
                 // 1. Creiamo l'oggetto usando il costruttore ESISTENTE (senza lat/long)
@@ -28,6 +30,8 @@ public class UtenteFactory {
                         dto.getLongitudine(),
                         dto.getLatitudine()
                 );
+
+                produttore.setStatoAccount(StatoAccount.IN_ATTESA);
 
                 // 2. Impostiamo le coordinate separatamente (se presenti nel DTO)
                 if (dto.getLatitudine() != null) produttore.setLatitudine(dto.getLatitudine());
@@ -48,6 +52,8 @@ public class UtenteFactory {
                         dto.getLatitudine()
                 );
 
+                trasformatore.setStatoAccount(StatoAccount.IN_ATTESA);
+
                 // Anche i trasformatori hanno una sede
                 if (dto.getLatitudine() != null) trasformatore.setLatitudine(dto.getLatitudine());
                 if (dto.getLongitudine() != null) trasformatore.setLongitudine(dto.getLongitudine());
@@ -67,6 +73,8 @@ public class UtenteFactory {
                         dto.getLatitudine()
                 );
 
+                distributore.setStatoAccount(StatoAccount.IN_ATTESA);
+
                 // Anche i distributori hanno una sede
                 if (dto.getLatitudine() != null) distributore.setLatitudine(dto.getLatitudine());
                 if (dto.getLongitudine() != null) distributore.setLongitudine(dto.getLongitudine());
@@ -74,13 +82,19 @@ public class UtenteFactory {
                 return distributore;
 
             case "CURATORE":
-                return new Curatore(dto.getUsername(), dto.getEmail(), hashedPassword);
+                Curatore curatore = new Curatore(dto.getUsername(), dto.getEmail(), hashedPassword);
+                curatore.setStatoAccount(StatoAccount.IN_ATTESA);
+                return curatore;
 
             case "ANIMATORE":
-                return new Animatore(dto.getUsername(), dto.getEmail(), hashedPassword);
+                Animatore animatore = new Animatore(dto.getUsername(), dto.getEmail(), hashedPassword);
+                animatore.setStatoAccount(StatoAccount.IN_ATTESA);
+                return animatore;
 
             case "GESTORE":
-                return new Gestore(dto.getUsername(), dto.getEmail(), hashedPassword);
+                Gestore gestore = new Gestore(dto.getUsername(), dto.getEmail(), hashedPassword);
+                gestore.setStatoAccount(StatoAccount.IN_ATTESA);
+                return gestore;
 
             default:
                 throw new IllegalArgumentException("Ruolo non valido: " + ruolo);

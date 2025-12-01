@@ -51,6 +51,7 @@ public class TracciabilitaServiceImpl implements TracciabilitaService {
         // FIX: Inizializza la lista se è null (evita NullPointerException)
         if (traccia.getPassi() == null) {
             traccia.setPassi(new ArrayList<>());
+
         }
 
         // 3. Determina l'ordine del nuovo passo
@@ -62,7 +63,6 @@ public class TracciabilitaServiceImpl implements TracciabilitaService {
         // 4. Crea il nuovo PassoFiliera
         PassoFiliera passo = new PassoFiliera();
 
-        // FIX: Conversione da Stringa (DTO) a Enum (Model)
         try {
             passo.setTipoPasso(TipoPassoFiliera.valueOf(request.getNomeFase()));
         } catch (IllegalArgumentException | NullPointerException e) {
@@ -76,16 +76,13 @@ public class TracciabilitaServiceImpl implements TracciabilitaService {
         passo.setOrdine(ordine);
         passo.setAzienda(azienda);
         passo.setTracciabilita(traccia);
-
         passoFilieraRepository.save(passo);
+        passo.setStatoApprovazione(StatoApprovazione.IN_ATTESA);
 
-        // Aggiungiamo manualmente alla lista locale per il ricalcolo immediato del DTO
         traccia.getPassi().add(passo);
 
         return convertToDTO(traccia);
     }
-
-    // --- Metodi Privati di Utilità ---
 
     private TracciabilitaProdotto findOrCreateTracciabilita(Long prodottoId) {
         return tracciabilitaRepository.findByProdottoId(prodottoId)
@@ -109,7 +106,8 @@ public class TracciabilitaServiceImpl implements TracciabilitaService {
         // Controllo null anche qui per sicurezza
         List<PassoFiliera> passi = traccia.getPassi() != null ? traccia.getPassi() : new ArrayList<>();
 
-        List<PassoFilieraDTO> passiDTO = passi.stream()
+        List<PassoFilieraDTO> passiDTO = traccia.getPassi().stream()
+                .filter(p -> p.getStatoApprovazione() == StatoApprovazione.APPROVATO) // <--- FILTRO
                 .sorted(Comparator.comparingInt(PassoFiliera::getOrdine))
                 .map(this::convertPassoToDTO)
                 .collect(Collectors.toList());

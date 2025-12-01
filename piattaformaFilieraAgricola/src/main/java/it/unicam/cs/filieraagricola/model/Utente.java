@@ -26,6 +26,17 @@ public abstract class Utente {
     @Column(name = "ruolo", insertable = false, updatable = false)
     private String ruoloString;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatoAccount statoAccount;
+
+    public StatoAccount getStatoAccount() {
+        return statoAccount;
+    }
+
+    public void setStatoAccount(StatoAccount statoAccount) {
+        this.statoAccount = statoAccount;
+    }
 
     public Utente() {}
 
