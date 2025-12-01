@@ -23,8 +23,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disabilita CSRF per facilitare i test con Postman
                 .authorizeHttpRequests(authz -> authz
                         // Endpoint pubblici (Registrazione, Login, H2 Console)
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/")).permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+
+                        // --- SWAGGER / OPENAPI WHITELIST ---
+                        // Permette l'accesso alla documentazione API senza login
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui.html")).permitAll()
+                        // ------------------------------------
 
                         // TUTTO il resto richiede autenticazione
                         .anyRequest().authenticated()

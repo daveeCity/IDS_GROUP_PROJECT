@@ -40,7 +40,7 @@ public class DatiIniziali implements CommandLineRunner {
         System.out.println(" === PIATTAFORMA FILIERA AGRICOLA LOCALE - INIT DATA === 🌾\n");
 
         createDemoData();
-        showApplicationInfo();
+
     }
 
     private void createDemoData() {
@@ -71,7 +71,7 @@ public class DatiIniziali implements CommandLineRunner {
             moderazioneService.approvaProdotto(mela.getId());
             moderazioneService.approvaProdotto(vino.getId());
             moderazioneService.approvaProdotto(formaggio.getId());
-            // 🔥 PRODOTTO PER IL TUO TEST DI MODERAZIONE (Non approvato!)
+            // PRODOTTO PER IL TUO TEST DI MODERAZIONE (Non approvato!)
             ProdottoDTO miele = prodottoService.creaProdotto(new ProdottoRequestDTO("Miele Grezzo", "Miele non filtrato, in attesa di controllo", 8.00, 20), fattoria.getId());
             System.out.println("   -> Creato 'Miele Grezzo' (ID: " + miele.getId() + ") in stato IN_ATTESA per testare la moderazione.");
 
@@ -94,9 +94,9 @@ public class DatiIniziali implements CommandLineRunner {
             eventoDto.setTipo("FESTIVAL_GASTRONOMICO");
             eventoDto.setDataOraInizio(LocalDateTime.now().plusDays(5));
             eventoDto.setDataOraFine(LocalDateTime.now().plusDays(5).plusHours(4));
-
-            eventoService.creaEvento(eventoDto, animatore.getId());
-
+            EventoDTO eventooo ;
+            eventooo = eventoService.creaEvento(eventoDto, animatore.getId());
+            System.out.println("   -> Creato evento '" + eventooo.getId());
             System.out.println("... Creazione Tracciabilità ...");
             // 5. TRACCIABILITÀ (Per testare TracciabilitaController)
             PassoFilieraRequestDTO passo1 = new PassoFilieraRequestDTO();
@@ -109,7 +109,7 @@ public class DatiIniziali implements CommandLineRunner {
             tracciabilitaService.aggiungiPassoFiliera(mela.getId(), fattoria.getId(), passo1);
 
 
-            System.out.println("✅ DATI INIZIALI PRONTI PER L'ESAME");
+            System.out.println("DATI INIZIALI PRONTI PER L'ESAME");
 
         } catch (Exception e) {
             System.err.println("Errore init dati: " + e.getMessage());
@@ -132,18 +132,5 @@ public class DatiIniziali implements CommandLineRunner {
         return dto;
     }
 
-    private void showApplicationInfo() {
-        System.out.println("\n--- CREDENZIALI TEST (Password per tutti: password123) ---");
-        System.out.println("👨‍🌾 Produttore:    fattoriaRossi");
-        System.out.println("🏭 Trasformatore: caseificioVerdi");
-        System.out.println("🚚 Distributore:  tipicoMarche");
-        System.out.println("🛒 Acquirente:    annaNeri");
-        System.out.println("⚖️  Curatore:      curatoreDemo");
-        System.out.println("🎉 Animatore:     animatoreDemo");
-        System.out.println("\n--- COSA TESTARE SUBITO ---");
-        System.out.println("1. GET /api/moderazione/in-attesa (Vedrai il 'Miele Grezzo')");
-        System.out.println("2. GET /api/prodotti/catalogo (Vedrai Mela, Vino, Formaggio)");
-        System.out.println("3. GET /api/eventi (Vedrai la 'Festa del Raccolto')");
-        System.out.println("4. GET /api/tracciabilita/prodotto/{idMela} (Vedrai il passo 'Semina')");
-    }
+
 }
